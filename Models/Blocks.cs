@@ -42,7 +42,9 @@ namespace Models
             Green,
             Pink,
             Red,
-            Yellow
+            Yellow,
+
+            White
         }
 
         //升级奖励类型

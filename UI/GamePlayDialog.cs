@@ -1360,7 +1360,7 @@ namespace UI
 
                                 StartCoroutine(Delay.Run(() =>
                                 {
-                                    Constant.EffCtrlScript.ShowLevelUpEff(Blocks.CurLevel);
+                                    // Constant.EffCtrlScript.ShowLevelUpEff(Blocks.CurLevel);
                                 }, userCanMoveTime + 0.1f));
                             }
 

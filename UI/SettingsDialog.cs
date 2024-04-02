@@ -131,7 +131,7 @@ namespace UI
                     Constant.GamePlayScript.RestartGame(true);
                     LevelManager.instance.GetLevelData();
                     NewScore.instance.ResetScore();
-
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene3");
                     sendReplayClickAF();
                     OnBtnClk("close");
                     break;

@@ -9,9 +9,17 @@ namespace UI
 {
     public enum BlockItemEnum
     {
-        grape,
-        apple,
-        melon,
+        Arabic,
+        China,
+        Germany,
+        England,
+        Espanol,
+        France,
+        Greece,
+        Indonesia,
+        Italy,
+        Japan,
+
         empty
     }
     public class BlockItem : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler
@@ -28,6 +36,7 @@ namespace UI
 
         public Sprite[] blockItemSprite;
         public GameObject blockItem;
+        public Sprite fruitBlockSprite;
 
         private Sprite _tmpSprite;
         private Vector2 _startPos;
@@ -118,36 +127,6 @@ namespace UI
             // var randomEnum = Random.Range(0, 3);
             // blockItemEnum = (BlockItemEnum)randomEnum;
             // blockItem.GetComponent<Image>().sprite = blockItemSprite[randomEnum];
-            
-            //Change spawn block item to fruit depend on LevelData
-            if (LevelManager.instance.fruitDataListTemp.Count > 0)
-            {
-                foreach (var fruitData in LevelManager.instance.fruitDataListTemp)
-                {
-                    if (fruitData.fruitCount > 0)
-                    {
-                        blockItemEnum = fruitData.blockItemEnum;
-                        blockItem.GetComponent<Image>().sprite = blockItemSprite[(int)blockItemEnum];
-                        blockItem.GetComponent<Image>().color = new Color(255, 255, 255, 255);
-                        fruitData.fruitCount--;
-                        break;
-                    }
-                    else
-                    {
-                        Debug.Log("No more fruit to spawn");
-                        blockItemEnum = BlockItemEnum.empty;
-                        blockItem.GetComponent<Image>().sprite = null;
-                        blockItem.GetComponent<Image>().color = new Color(1, 1, 1, 0); 
-                        
-                    }
-                }
-            }
-            else
-            {
-                //make blockitem image transparent
-                blockItem.GetComponent<Image>().color = new Color(1, 1, 1, 0);
-            }
-
             var blockLength = data[(int)Blocks.Key.Length];
             switch (data[(int)Blocks.Key.Color])
             {
@@ -168,8 +147,69 @@ namespace UI
                     break;
             }
 
+            if (LevelManager.instance.fruitDataListTemp.Count > 0 && blockLength == 1)
+            {
+                for (var i = 0; i < LevelManager.instance.fruitDataListTemp.Count; i++)
+                {
+                    bool isNoFruitLeft = false;
+                    // Randomize the fruit
+                    var randomFruit = Random.Range(0, LevelManager.instance.fruitDataListTemp.Count);
+                    if (LevelManager.instance.fruitDataListTemp[randomFruit].fruitCount > 0)
+                    {
+                        blockItemEnum = LevelManager.instance.fruitDataListTemp[randomFruit].blockItemEnum;
+                        blockItem.GetComponent<Image>().sprite = blockItemSprite[(int)blockItemEnum];
+                        blockItem.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                        _tmpSprite = fruitBlockSprite;
+                        LevelManager.instance.fruitDataListTemp[randomFruit].fruitCount--;
+                        break;
+                    }
+                    else
+                    {
+                        Debug.Log("No more fruit to spawn");
+                        blockItemEnum = BlockItemEnum.empty;
+                        blockItem.GetComponent<Image>().sprite = null;
+                        blockItem.GetComponent<Image>().color = new Color(1, 1, 1, 0); 
+                        
+                    }
+                }
+                
+                
+                
+                // foreach (var fruitData in LevelManager.instance.fruitDataListTemp)
+                // {
+                //     if (fruitData.fruitCount > 0)
+                //     {
+                //         blockItemEnum = fruitData.blockItemEnum;
+                //         blockItem.GetComponent<Image>().sprite = blockItemSprite[(int)blockItemEnum];
+                //         blockItem.GetComponent<Image>().color = new Color(255, 255, 255, 255);
+                //         _tmpSprite = fruitBlockSprite;
+                //         fruitData.fruitCount--;
+                //         break;
+                //     }
+                //     else
+                //     {
+                //         Debug.Log("No more fruit to spawn");
+                //         blockItemEnum = BlockItemEnum.empty;
+                //         blockItem.GetComponent<Image>().sprite = null;
+                //         blockItem.GetComponent<Image>().color = new Color(1, 1, 1, 0); 
+                        
+                //     }
+                // }
+                
+            }
+            else
+            {
+                blockItemEnum = BlockItemEnum.empty;
+                //make blockitem image transparent
+                blockItem.GetComponent<Image>().color = new Color(1, 1, 1, 0);
+            }
+
+            
+
             blockImgNode.GetComponent<Image>().sprite = _tmpSprite;
             gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(Constant.BlockWidth * blockLength, Constant.BlockHeight);
+
+            
         }
 
         public void OnPointerDown()

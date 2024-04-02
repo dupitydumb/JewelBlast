@@ -269,34 +269,47 @@ namespace UI
         public void OnBtnClk(string btnType)
         {
             DebugEx.Log(btnType);
+            
+
+            // switch (NewScore.instance.gameState)
+            // {
+            //     case GameState.Win:
+            //         ManagerDialog.DestroyDialog("GameOverDialog");
+            //         Constant.GamePlayScript.RestartGame();
+            //         ManagerAudio.ResumeBgm();
+            //         LevelManager.instance.levelContainer.currentLevel++;
+            //         NewScore.instance.Init();
+            //         LevelManager.instance.GetLevelData();
+            //         NewScore.instance.ResetScore();
+            //         break;
+            //     case GameState.GameOver:
+            //         ManagerDialog.DestroyDialog("GameOverDialog");
+            //         Constant.GamePlayScript.RestartGame();
+            //         ManagerAudio.ResumeBgm();
+            //         LevelManager.instance.GetLevelData();
+            //         NewScore.instance.ResetScore();
+            //         break;
+            //     case GameState.Playing:
+            //         ManagerDialog.DestroyDialog("GameOverDialog");
+            //         Constant.GamePlayScript.RestartGame();
+            //         ManagerAudio.ResumeBgm();
+            //         LevelManager.instance.GetLevelData();
+            //         NewScore.instance.ResetScore();
+            //         break;
+                    
+            // }
+
             switch (btnType)
             {
                 case "again":
                     ManagerDialog.DestroyDialog("GameOverDialog");
                     Constant.GamePlayScript.RestartGame();
                     ManagerAudio.ResumeBgm();
-                    LevelManager.instance.GetLevelData();
-                    NewScore.instance.ResetScore();
-
-                    break;
-            }
-
-            switch (NewScore.instance.gameState)
-            {
-                case GameState.Win:
-                    ManagerDialog.DestroyDialog("GameOverDialog");
-                    Constant.GamePlayScript.RestartGame();
-                    ManagerAudio.ResumeBgm();
                     LevelManager.instance.levelContainer.currentLevel++;
+                    NewScore.instance.Init();
                     LevelManager.instance.GetLevelData();
                     NewScore.instance.ResetScore();
-                    break;
-                case GameState.GameOver:
-                    ManagerDialog.DestroyDialog("GameOverDialog");
-                    Constant.GamePlayScript.RestartGame();
-                    ManagerAudio.ResumeBgm();
-                    LevelManager.instance.GetLevelData();
-                    NewScore.instance.ResetScore();
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene3");
                     break;
             }
             
